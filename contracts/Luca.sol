@@ -35,4 +35,8 @@ contract Luca is ERC20 {
         require(totalSupply() + amount <= _supplyCap, "Luca : Cannot mint more than supplyCap");
         _mint(account, amount);
     }
+
+    function burn(address account, uint256 amount) external onlyOwner {
+        _burn(account, amount);
+    }
 }

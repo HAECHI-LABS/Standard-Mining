@@ -45,11 +45,7 @@ contract RewardPool {
     }
 
     modifier updateReward(address account) {
-        if(user[account].state == 0) {
-
-        }
-
-        else if(user[account].state == 1) {
+        if(user[account].state == 1) {
             uint256 i;
             uint256 start = user[account].phase[0];
             uint256 end = _rewardPhase;
@@ -93,6 +89,11 @@ contract RewardPool {
                 require(user[account].phase[0] == _rewardPhase-1 && user[account].phase[1] == _rewardPhase, "RewardPool : unintended behavior");
             }
         }
+
+        else {
+            require(user[account].state == 0, "RewardPool : not valid state");
+        }
+
         _;
     }
 
@@ -255,9 +256,7 @@ contract RewardPool {
         }
     }
 
-    function update() external updateReward(msg.sender) {
-
-    }
+    function update() external updateReward(msg.sender) {}
 
     function notifyReward(uint256 amount) external onlyOwner {
         uint256 currentPhase = _rewardPhase;
